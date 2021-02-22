@@ -92,24 +92,6 @@ const HomePage = () => {
           {backGroundDesign()}
           <TechnologyPage />
         </Tab>
-        <Tab
-          heading="Sports"
-          tabStyle={{ backgroundColor: "#6000D2" }}
-          textStyle={{ color: "white" }}
-          activeTabStyle={{ backgroundColor: "#6000D2" }}
-        >
-          {backGroundDesign()}
-          <NewsPage />
-        </Tab>
-        <Tab
-          heading="Sports"
-          tabStyle={{ backgroundColor: "#6000D2" }}
-          textStyle={{ color: "white" }}
-          activeTabStyle={{ backgroundColor: "#6000D2" }}
-        >
-          {backGroundDesign()}
-          <NewsPage />
-        </Tab>
       </Tabs>
     </Container>
   );
