@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Cards } from "../Cards/Cards";
-import { Dimensions, ScrollView } from "react-native";
+import { Dimensions, ScrollView, TouchableOpacity } from "react-native";
 import { Spinner, View } from "native-base";
 import axios from "axios";
 import { newsByCategoryAndCountryApi } from "../../Constants/ApiConstants";
 
-const TechnologyPage = () => {
+const TechnologyPage = ({ navigation }) => {
   const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get(
     "window"
   );
@@ -67,9 +67,14 @@ const TechnologyPage = () => {
       ) : (
         <ScrollView>
           {technology.map((item, index) => (
-            <View key={`${index}${technology.length}`}>
-              <Cards news={item} />
-            </View>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("NewsDetail", { news: item })}
+              key={`${index}${technology.length}`}
+            >
+              <View key={`${index}${technology.length}`}>
+                <Cards news={item} />
+              </View>
+            </TouchableOpacity>
           ))}
         </ScrollView>
       )}

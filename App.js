@@ -5,6 +5,7 @@ import SplashScreen from "./Component/SplashScreen/SplashScreen";
 import HomePage from "./Component/HomePage/HomePage";
 import { View } from "native-base";
 import { Header } from "./Component/TopBar/Header";
+import NewsDetail from "./Component/NewsDetail/NewsDetail";
 
 const Stack = createStackNavigator();
 const HeaderOptions = {
@@ -34,6 +35,11 @@ export default function App() {
           name="Home"
           options={{ ...HeaderOptions, title: "Welcome" }}
           component={HomePage}
+        />
+        <Stack.Screen
+          name="NewsDetail"
+          options={{ headerShown: false }}
+          component={NewsDetail}
         />
       </Stack.Navigator>
     </NavigationContainer>

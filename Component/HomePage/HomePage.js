@@ -25,7 +25,7 @@ const backGroundDesign = () => {
   );
 };
 
-const HomePage = () => {
+const HomePage = ({ navigation }) => {
   return (
     <Container>
       <Tabs
@@ -40,7 +40,7 @@ const HomePage = () => {
           activeTabStyle={{ backgroundColor: "#6000D2" }}
         >
           {backGroundDesign()}
-          <AllNewsPage />
+          <AllNewsPage navigation={navigation} />
         </Tab>
         <Tab
           heading="Sports"
@@ -49,7 +49,7 @@ const HomePage = () => {
           activeTabStyle={{ backgroundColor: "#6000D2" }}
         >
           {backGroundDesign()}
-          <SportsPage />
+          <SportsPage navigation={navigation} />
         </Tab>
         <Tab
           heading="Science"
@@ -61,7 +61,7 @@ const HomePage = () => {
           activeTabStyle={{ backgroundColor: "#6000D2" }}
         >
           {backGroundDesign()}
-          <SciencePage />
+          <SciencePage navigation={navigation} />
         </Tab>
         <Tab
           heading="Business"
@@ -70,7 +70,7 @@ const HomePage = () => {
           activeTabStyle={{ backgroundColor: "#6000D2" }}
         >
           {backGroundDesign()}
-          <BusinessPage />
+          <BusinessPage navigation={navigation} />
         </Tab>
         <Tab
           heading="Entertainment"
@@ -79,7 +79,7 @@ const HomePage = () => {
           activeTabStyle={{ backgroundColor: "#6000D2" }}
         >
           {backGroundDesign()}
-          <EntertainmentPage />
+          <EntertainmentPage navigation={navigation} />
         </Tab>
 
         <Tab
@@ -89,7 +89,7 @@ const HomePage = () => {
           activeTabStyle={{ backgroundColor: "#6000D2" }}
         >
           {backGroundDesign()}
-          <TechnologyPage />
+          <TechnologyPage navigation={navigation} />
         </Tab>
       </Tabs>
     </Container>

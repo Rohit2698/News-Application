@@ -1,6 +1,6 @@
 import { Spinner } from "native-base";
 import * as React from "react";
-import { Text, View, Image } from "react-native";
+import { Text, View, Image, TouchableOpacity } from "react-native";
 import Carousel from "react-native-snap-carousel";
 
 const CarouselItems = ({ navigation, title, news, loading, errorLoading }) => {
@@ -8,30 +8,36 @@ const CarouselItems = ({ navigation, title, news, loading, errorLoading }) => {
 
   const renderItem = ({ item, index }) => {
     return (
-      <View
-        style={{
-          backgroundColor: "floralwhite",
-          borderRadius: 5,
-          height: 350,
-          padding: 10,
-          marginLeft: 25,
-          marginRight: 25,
-          elevation: 5,
-          marginBottom: 10,
-        }}
+      <TouchableOpacity
+        onPress={() => navigation.navigate("NewsDetail", { news: item })}
       >
-        <Image
-          style={{ height: "50%", width: "100%", borderRadius: 10 }}
-          source={{
-            uri: `${item.urlToImage}`,
+        <View
+          style={{
+            backgroundColor: "floralwhite",
+            borderRadius: 5,
+            height: 350,
+            padding: 10,
+            marginLeft: 25,
+            marginRight: 25,
+            elevation: 5,
+            marginBottom: 10,
           }}
-        />
-        <View>
-          <Text style={{ fontSize: 20, fontWeight: "bold" }}>{item.title}</Text>
-          <Text>{item.author}</Text>
-          <Text>{item.publishedAt}</Text>
+        >
+          <Image
+            style={{ height: "50%", width: "100%", borderRadius: 10 }}
+            source={{
+              uri: `${item.urlToImage}`,
+            }}
+          />
+          <View>
+            <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+              {item.title}
+            </Text>
+            <Text>{item.author}</Text>
+            <Text>{item.publishedAt}</Text>
+          </View>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
 

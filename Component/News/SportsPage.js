@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Cards } from "../Cards/Cards";
-import { Dimensions, ScrollView } from "react-native";
+import { Dimensions, ScrollView, TouchableOpacity } from "react-native";
 import { Spinner, Text, View } from "native-base";
 import axios from "axios";
 import { newsByCategoryAndCountryApi } from "../../Constants/ApiConstants";
 
-const SportsPage = () => {
+const SportsPage = ({ navigation }) => {
   const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get(
     "window"
   );
@@ -67,9 +67,14 @@ const SportsPage = () => {
       ) : (
         <ScrollView>
           {sports.map((item, index) => (
-            <View key={`${index}${sports.length}`}>
-              <Cards news={item} />
-            </View>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("NewsDetail", { news: item })}
+              key={`${index}${sports.length}`}
+            >
+              <View key={`${index}${sports.length}`}>
+                <Cards news={item} />
+              </View>
+            </TouchableOpacity>
           ))}
         </ScrollView>
       )}

@@ -5,7 +5,7 @@ import { Dimensions, ScrollView } from "react-native";
 import { newsByCategoryApi } from "../../Constants/ApiConstants";
 import CarouselItems from "../HomePage/CarouselItem";
 
-const AllNewsPage = () => {
+const AllNewsPage = ({ navigation }) => {
   const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get(
     "window"
   );
@@ -104,6 +104,7 @@ const AllNewsPage = () => {
           loading={loadingSports}
           title={"Sports"}
           news={sportsNews}
+          navigation={navigation}
         />
       </View>
       <View>
@@ -112,6 +113,7 @@ const AllNewsPage = () => {
           loading={loadingBusiness}
           title={"Business"}
           news={businessNews}
+          navigation={navigation}
         />
       </View>
       <View>
@@ -120,6 +122,7 @@ const AllNewsPage = () => {
           loading={loadingEntertainment}
           title={"Entertainment"}
           news={entertainment}
+          navigation={navigation}
         />
       </View>
       <View>
@@ -128,6 +131,7 @@ const AllNewsPage = () => {
           loading={loadingTechnology}
           title={"Technology"}
           news={technology}
+          navigation={navigation}
         />
       </View>
       <View>
@@ -136,6 +140,7 @@ const AllNewsPage = () => {
           loading={loadingHealth}
           title={"Health"}
           news={health}
+          navigation={navigation}
         />
       </View>
       <View style={{ marginBottom: 200 }}>
@@ -144,6 +149,7 @@ const AllNewsPage = () => {
           loading={loadingScience}
           title={"Science"}
           news={science}
+          navigation={navigation}
         />
       </View>
     </ScrollView>
