@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Cards } from "../Cards/Cards";
 import { Dimensions, ScrollView } from "react-native";
-import { View } from "native-base";
+import { Spinner, View } from "native-base";
 import axios from "axios";
 import { newsByCategoryAndCountryApi } from "../../Constants/ApiConstants";
 
@@ -10,13 +10,19 @@ const TechnologyPage = () => {
     "window"
   );
   const [technology, setTechnology] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [errorLoading, setErrorLoading] = useState(false);
 
   useEffect(() => {
     axios
       .get(newsByCategoryAndCountryApi("in", "technology"))
       .then((response) => {
         setTechnology(response.data.articles);
+        setLoading(false);
+      })
+      .catch(() => {
+        setLoading(false);
+        setErrorLoading(true);
       })
       .then(() => fetchUsaNews());
   }, []);
@@ -48,11 +54,25 @@ const TechnologyPage = () => {
         height: SCREEN_HEIGHT,
       }}
     >
-      <ScrollView>
-        {technology.map((item) => (
-          <Cards news={item} />
-        ))}
-      </ScrollView>
+      {loading ? (
+        <View
+          style={{
+            marginLeft: SCREEN_WIDTH / 2,
+          }}
+        >
+          <Spinner />
+        </View>
+      ) : errorLoading ? (
+        <Cards errorLoading={errorLoading} />
+      ) : (
+        <ScrollView>
+          {technology.map((item, index) => (
+            <View key={`${index}${technology.length}`}>
+              <Cards news={item} />
+            </View>
+          ))}
+        </ScrollView>
+      )}
     </View>
   );
 };

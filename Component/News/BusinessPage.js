@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Cards } from "../Cards/Cards";
 import { Dimensions, ScrollView } from "react-native";
-import { View } from "native-base";
+import { Spinner, View } from "native-base";
 import axios from "axios";
 import { newsByCategoryAndCountryApi } from "../../Constants/ApiConstants";
 
@@ -10,12 +10,19 @@ const BusinessPage = () => {
     "window"
   );
   const [business, setBusiness] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [errorLoading, setErrorLoading] = useState(false);
 
   useEffect(() => {
     axios
       .get(newsByCategoryAndCountryApi("in", "business"))
       .then((response) => {
         setBusiness(response.data.articles);
+        setLoading(false);
+      })
+      .catch(() => {
+        setLoading(false);
+        setErrorLoading(true);
       })
       .then(() => fetchUsaNews());
   }, []);
@@ -47,11 +54,25 @@ const BusinessPage = () => {
         height: SCREEN_HEIGHT,
       }}
     >
-      <ScrollView>
-        {business.map((item) => (
-          <Cards news={item} />
-        ))}
-      </ScrollView>
+      {loading ? (
+        <View
+          style={{
+            marginLeft: SCREEN_WIDTH / 2,
+          }}
+        >
+          <Spinner />
+        </View>
+      ) : errorLoading ? (
+        <Cards errorLoading={errorLoading} />
+      ) : (
+        <ScrollView>
+          {business.map((item, index) => (
+            <View key={`${index}${business.length}`}>
+              <Cards news={item} />
+            </View>
+          ))}
+        </ScrollView>
+      )}
     </View>
   );
 };

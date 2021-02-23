@@ -1,7 +1,6 @@
 import { Container, ScrollableTab, Tab, Tabs } from "native-base";
 import React from "react";
 import { Dimensions, View } from "react-native";
-import NewsPage from "../News/NewsPage";
 import AllNewsPage from "../News/AllNewsPage";
 import SportsPage from "../News/SportsPage";
 import SciencePage from "../News/SciencePage";

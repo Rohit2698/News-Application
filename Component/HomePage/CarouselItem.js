@@ -1,9 +1,9 @@
+import { Spinner } from "native-base";
 import * as React from "react";
-import { Text, View, SafeAreaView, Image } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { Text, View, Image } from "react-native";
 import Carousel from "react-native-snap-carousel";
 
-const CarouselItems = ({ navigation, title, news }) => {
+const CarouselItems = ({ navigation, title, news, loading, errorLoading }) => {
   const [activeIndex, setActiveIndex] = React.useState(0);
 
   const renderItem = ({ item, index }) => {
@@ -61,16 +61,24 @@ const CarouselItems = ({ navigation, title, news }) => {
           justifyContent: "center",
         }}
       >
-        <Carousel
-          layout={"default"}
-          data={news}
-          sliderWidth={300}
-          itemWidth={350}
-          itemHeight={300}
-          containerCustomStyle={{ flex: 1 }}
-          renderItem={renderItem}
-          onSnapToItem={(index) => setActiveIndex(index)}
-        />
+        {loading ? (
+          errorLoading ? (
+            <Text>Sorry Network error</Text>
+          ) : (
+            <Spinner />
+          )
+        ) : (
+          <Carousel
+            layout={"default"}
+            data={news}
+            sliderWidth={300}
+            itemWidth={350}
+            itemHeight={300}
+            containerCustomStyle={{ flex: 1 }}
+            renderItem={renderItem}
+            onSnapToItem={(index) => setActiveIndex(index)}
+          />
+        )}
       </View>
     </View>
   );

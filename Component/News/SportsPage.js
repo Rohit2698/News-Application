@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Cards } from "../Cards/Cards";
 import { Dimensions, ScrollView } from "react-native";
-import { Text, View } from "native-base";
+import { Spinner, Text, View } from "native-base";
 import axios from "axios";
 import { newsByCategoryAndCountryApi } from "../../Constants/ApiConstants";
 
@@ -10,12 +10,19 @@ const SportsPage = () => {
     "window"
   );
   const [sports, setSports] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [errorLoading, setErrorLoading] = useState(false);
 
   useEffect(() => {
     axios
       .get(newsByCategoryAndCountryApi("in", "sports"))
       .then((response) => {
         setSports(response.data.articles);
+        setLoading(false);
+      })
+      .catch(() => {
+        setLoading(false);
+        setErrorLoading(true);
       })
       .then(() => fetchUsaNews());
   }, []);
@@ -23,9 +30,9 @@ const SportsPage = () => {
   const fetchUsaNews = () => {
     axios
       .get(newsByCategoryAndCountryApi("us", "sports"))
-      .then((response) =>
-        setSports((prev) => [...prev, ...response.data.articles])
-      )
+      .then((response) => {
+        setSports((prev) => [...prev, ...response.data.articles]);
+      })
       .then(() => fetchArNews());
   };
 
@@ -47,13 +54,25 @@ const SportsPage = () => {
         height: SCREEN_HEIGHT,
       }}
     >
-      <ScrollView>
-        {sports.map((item, index) => (
-          <View key={`${index}${sports.length}`}>
-            <Cards news={item} />
-          </View>
-        ))}
-      </ScrollView>
+      {loading ? (
+        <View
+          style={{
+            marginLeft: SCREEN_WIDTH / 2,
+          }}
+        >
+          <Spinner />
+        </View>
+      ) : errorLoading ? (
+        <Cards errorLoading={errorLoading} />
+      ) : (
+        <ScrollView>
+          {sports.map((item, index) => (
+            <View key={`${index}${sports.length}`}>
+              <Cards news={item} />
+            </View>
+          ))}
+        </ScrollView>
+      )}
     </View>
   );
 };

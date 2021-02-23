@@ -1,11 +1,11 @@
 import axios from "axios";
-import { Text, View } from "native-base";
+import { Spinner, Text, View } from "native-base";
 import React, { useEffect, useState } from "react";
 import { Dimensions, ScrollView } from "react-native";
 import { newsByCategoryApi } from "../../Constants/ApiConstants";
 import CarouselItems from "../HomePage/CarouselItem";
 
-const SportsNewsPage = () => {
+const AllNewsPage = () => {
   const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get(
     "window"
   );
@@ -15,63 +15,80 @@ const SportsNewsPage = () => {
   const [technology, setTechnology] = useState();
   const [health, setHealth] = useState();
   const [science, setScience] = useState();
+  const [loadingSports, setLoadingSports] = useState(true);
+  const [loadingBusiness, setLoadingBusiness] = useState(true);
+  const [loadingEntertainment, setLoadingEntertainment] = useState(true);
+  const [loadingTechnology, setLoadingTechnology] = useState(true);
+  const [loadingHealth, setLoadingHealth] = useState(true);
+  const [loadingScience, setLoadingScience] = useState(true);
+  const [errorSports, setErrorSports] = useState(false);
+  const [errorBusiness, setErrorBusiness] = useState(false);
+  const [errorEntertainment, setErrorEntertainment] = useState(false);
+  const [errorTechnology, setErrorTechnology] = useState(false);
+  const [errorHealth, setErrorHealth] = useState(false);
+  const [errorScience, setErrorScience] = useState(false);
+
   useEffect(() => {
     axios
       .get(newsByCategoryApi("sports"))
-      .then((response) => setSportsNews(response.data.articles));
+      .then((response) => {
+        setSportsNews(response.data.articles);
+        setLoadingSports(false);
+      })
+      .catch(() => {
+        setErrorSports(true);
+      });
 
     axios
       .get(newsByCategoryApi("business"))
-      .then((response) => setBusinessNews(response.data.articles));
+      .then((response) => {
+        setBusinessNews(response.data.articles);
+        setLoadingBusiness(false);
+      })
+      .catch(() => {
+        setErrorBusiness(true);
+      });
 
     axios
       .get(newsByCategoryApi("entertainment"))
-      .then((response) => setEntertainment(response.data.articles));
+      .then((response) => {
+        setEntertainment(response.data.articles);
+        setLoadingEntertainment(false);
+      })
+      .catch(() => {
+        setErrorEntertainment(true);
+      });
 
     axios
       .get(newsByCategoryApi("technology"))
-      .then((response) => setTechnology(response.data.articles));
+      .then((response) => {
+        setTechnology(response.data.articles);
+        setLoadingTechnology(false);
+      })
+      .catch(() => {
+        setErrorTechnology(true);
+      });
 
     axios
       .get(newsByCategoryApi("health"))
-      .then((response) => setHealth(response.data.articles));
+      .then((response) => {
+        setHealth(response.data.articles);
+        setLoadingHealth(false);
+      })
+      .catch(() => {
+        setErrorHealth(true);
+      });
 
     axios
       .get(newsByCategoryApi("science"))
-      .then((response) => setScience(response.data.articles));
+      .then((response) => {
+        setScience(response.data.articles);
+        setLoadingScience(false);
+      })
+      .catch(() => {
+        setErrorScience(true);
+      });
   }, []);
-
-  const Sports = [
-    {
-      url: "https://static.theprint.in/wp-content/uploads/2020/07/football.jpg",
-      title: "Market",
-      text: "Text 1",
-    },
-    {
-      url:
-        "https://img.etimg.com/thumb/msid-81151870,width-1070,height-580,imgsize-468337,overlay-etmarkets/photo.jpg",
-      title: "Item 2",
-      text: "Text 2",
-    },
-    {
-      url:
-        "https://img.etimg.com/thumb/msid-81151870,width-1070,height-580,imgsize-468337,overlay-etmarkets/photo.jpg",
-      title: "Item 3",
-      text: "Text 3",
-    },
-    {
-      url:
-        "https://img.etimg.com/thumb/msid-81151870,width-1070,height-580,imgsize-468337,overlay-etmarkets/photo.jpg",
-      title: "Item 4",
-      text: "Text 4",
-    },
-    {
-      url:
-        "https://img.etimg.com/thumb/msid-81151870,width-1070,height-580,imgsize-468337,overlay-etmarkets/photo.jpg",
-      title: "Item 5",
-      text: "Text 5",
-    },
-  ];
 
   return (
     <ScrollView
@@ -82,25 +99,55 @@ const SportsNewsPage = () => {
       }}
     >
       <View>
-        <CarouselItems title={"Sports"} news={sportsNews} />
+        <CarouselItems
+          errorLoading={errorSports}
+          loading={loadingSports}
+          title={"Sports"}
+          news={sportsNews}
+        />
       </View>
       <View>
-        <CarouselItems title={"Business"} news={businessNews} />
+        <CarouselItems
+          errorLoading={errorBusiness}
+          loading={loadingBusiness}
+          title={"Business"}
+          news={businessNews}
+        />
       </View>
       <View>
-        <CarouselItems title={"Entertainment"} news={entertainment} />
+        <CarouselItems
+          errorLoading={errorEntertainment}
+          loading={loadingEntertainment}
+          title={"Entertainment"}
+          news={entertainment}
+        />
       </View>
       <View>
-        <CarouselItems title={"Technology"} news={technology} />
+        <CarouselItems
+          errorLoading={errorTechnology}
+          loading={loadingTechnology}
+          title={"Technology"}
+          news={technology}
+        />
       </View>
       <View>
-        <CarouselItems title={"Health"} news={health} />
+        <CarouselItems
+          errorLoading={errorHealth}
+          loading={loadingHealth}
+          title={"Health"}
+          news={health}
+        />
       </View>
       <View style={{ marginBottom: 200 }}>
-        <CarouselItems title={"Science"} news={science} />
+        <CarouselItems
+          errorLoading={errorScience}
+          loading={loadingScience}
+          title={"Science"}
+          news={science}
+        />
       </View>
     </ScrollView>
   );
 };
 
-export default SportsNewsPage;
+export default AllNewsPage;
